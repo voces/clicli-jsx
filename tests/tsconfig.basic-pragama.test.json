@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node16",
+    "lib": ["dom", "es2022"],
+    "jsx": "react"
+  },
+  "include": ["../../temp/*"],
+  "tstl": {
+    "luaBundleEntry": "temp/source.tsx",
+    "luaBundle": "../temp/output.lua",
+    "noImplicitSelf": true
+  }
+}

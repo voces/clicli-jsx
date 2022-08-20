@@ -1,0 +1,22 @@
+{
+  "name": "basic-pragma-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tstl",
+    "test-basic-pragma": "jest tests/basic-pragma.test.tsx"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^28.1.7",
+    "fengari": "^0.1.4",
+    "jest": "^28.1.3",
+    "ts-jest": "^28.0.8",
+    "typescript-to-lua": "^1.9.0"
+  },
+  "dependencies": {
+    "basic-pragma": "^3.0.2"
+  }
+}

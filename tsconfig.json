@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node16",
+    "target": "ES2022",
+    "lib": ["DOM", "ES2022"],
+    "jsx": "react",
+    "outDir": "./dist/"
+  },
+  "tstl": {
+    "buildMode": "library",
+    "noImplicitSelf": true
+  }
+}
