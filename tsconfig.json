@@ -1,10 +1,18 @@
 {
   "compilerOptions": {
+    "declaration": true,
     "moduleResolution": "Node16",
     "target": "ES2022",
-    "lib": ["DOM", "ES2022"],
+    "lib": ["ES2022"],
     "jsx": "react",
-    "outDir": "./dist/"
+    "jsxFactory": "createElement",
+    "jsxFragmentFactory": "Fragment",
+    "outDir": "dist/",
+    "esModuleInterop": true,
+    "types": [
+      "clicli-types/types/index",
+      "jest"
+    ]
   },
   "tstl": {
     "buildMode": "library",

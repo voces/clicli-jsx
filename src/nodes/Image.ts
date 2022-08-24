@@ -1,15 +1,15 @@
-import type { NODE_TYPE_IMAGE } from "../types";
-import { createNode, Node, NodeProps } from "./Node";
+import { UI_COMP_TYPE_IMAGE } from "../constants";
+import { BaseNode, BaseNodeProps, createNode } from "./BaseNode";
 
-export type ImageNodeProps = NodeProps & { image: number };
+export type ImageNodeProps = BaseNodeProps & { image: number };
 
-type ImageNode = Node & {
-  type: NODE_TYPE_IMAGE;
+export type ImageNode = Omit<BaseNode, "type"> & {
+  type: typeof UI_COMP_TYPE_IMAGE;
   image: number;
 };
 
 export const createImageNode = (props: ImageNodeProps): ImageNode => ({
   ...createNode(props, "image"),
-  type: 4,
+  type: UI_COMP_TYPE_IMAGE,
   image: props.image,
 });

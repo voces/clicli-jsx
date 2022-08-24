@@ -1,4 +1,4 @@
-import type { Node } from "./nodes/Node";
+import { Node } from "./types";
 
 let _parent: Node;
 

@@ -1,3 +1,17 @@
+export const UI_COMP_TYPE_UNSET = -1;
+export const UI_COMP_TYPE_PANEL = 2;
+export const UI_COMP_TYPE_TEXT = 3;
+export const UI_COMP_TYPE_IMAGE = 4;
+export const UI_COMP_TYPE_PROGRESS = 5;
+export const UI_COMP_TYPE_LAYOUT = 7;
+export type UI_COMP_TYPE =
+  | typeof UI_COMP_TYPE_UNSET
+  | typeof UI_COMP_TYPE_PANEL
+  | typeof UI_COMP_TYPE_TEXT
+  | typeof UI_COMP_TYPE_IMAGE
+  | typeof UI_COMP_TYPE_PROGRESS
+  | typeof UI_COMP_TYPE_LAYOUT;
+
 export const UI_EVENT_UNSET = -1;
 export const UI_EVENT_CLICK = 1;
 export const UI_EVENT_DOUBLE_CLICK = 22;

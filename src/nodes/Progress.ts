@@ -1,9 +1,9 @@
-import type { Color, ColorProp, NODE_TYPE_PROGRESS } from "../types";
-import type { BACKGROUND, PROGRESS } from "../constants";
-import { createNode, Node, NodeProps } from "./Node";
+import type { Color, ColorProp } from "../types";
+import { BACKGROUND, PROGRESS, UI_COMP_TYPE_PROGRESS } from "../constants";
+import { BaseNode, BaseNodeProps, createNode } from "./BaseNode";
 import { colorPropToNode } from "../utils";
 
-export type ProgressNodeProps = NodeProps & {
+export type ProgressNodeProps = BaseNodeProps & {
   reverse?: boolean;
   percent?: number;
   progress?: PROGRESS;
@@ -14,8 +14,8 @@ export type ProgressNodeProps = NodeProps & {
   fillImage?: number;
 };
 
-type ProgressNode = Node & {
-  type: NODE_TYPE_PROGRESS;
+export type ProgressNode = Omit<BaseNode, "type"> & {
+  type: typeof UI_COMP_TYPE_PROGRESS;
   reverse: boolean | undefined;
   percent: number | undefined;
   process_type: PROGRESS | undefined;
@@ -28,7 +28,7 @@ type ProgressNode = Node & {
 
 export const createProgressNode = (props: ProgressNodeProps): ProgressNode => ({
   ...createNode(props, "progress"),
-  type: 5,
+  type: UI_COMP_TYPE_PROGRESS,
   reverse: props.reverse,
   percent: props.percent,
   process_type: props.progress,

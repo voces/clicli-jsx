@@ -1,9 +1,9 @@
-import type { Color, ColorProp, NODE_TYPE_TEXT, Tuple } from "../types";
-import type { ALIGN, FONT_NAME, JUSTIFY } from "../constants";
-import { createNode, Node, NodeProps } from "./Node";
+import type { Color, ColorProp, Tuple } from "../types";
+import { ALIGN, FONT_NAME, JUSTIFY, UI_COMP_TYPE_TEXT } from "../constants";
+import { BaseNode, BaseNodeProps, createNode } from "./BaseNode";
 import { colorPropToNode } from "../utils";
 
-export type TextNodeProps = NodeProps & {
+export type TextNodeProps = BaseNodeProps & {
   text: string;
   justify?: JUSTIFY;
   align?: ALIGN;
@@ -13,8 +13,8 @@ export type TextNodeProps = NodeProps & {
   lineSpace?: number;
 };
 
-export type TextNode = Node & {
-  type: NODE_TYPE_TEXT;
+export type TextNode = Omit<BaseNode, "type"> & {
+  type: typeof UI_COMP_TYPE_TEXT;
   text: Tuple<[text: string, unknown: false]>;
   alignment?: Tuple<[JUSTIFY, ALIGN]>;
   font: Tuple<[fontName: FONT_NAME, size: number]>;
@@ -24,7 +24,7 @@ export type TextNode = Node & {
 
 export const createTextNode = (props: TextNodeProps): TextNode => ({
   ...createNode(props, "text"),
-  type: 3,
+  type: UI_COMP_TYPE_TEXT,
   text: { __tuple__: true, items: [props.text, false] },
   alignment: { __tuple__: true, items: [props.justify ?? 2, props.align ?? 8] },
   line_space: props.lineSpace,

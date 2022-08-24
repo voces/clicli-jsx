@@ -1,9 +1,9 @@
 import type { UI_ACTION, UI_ANIM, UI_EVENT } from "./constants";
-import type { ImageNodeProps } from "./nodes/Image";
-import type { LayoutNodeProps } from "./nodes/Layout";
-import type { PanelNodeProps } from "./nodes/Panel";
-import type { ProgressNodeProps } from "./nodes/Progress";
-import type { TextNodeProps } from "./nodes/Text";
+import type { ImageNode, ImageNodeProps } from "./nodes/Image";
+import type { LayoutNode, LayoutNodeProps } from "./nodes/Layout";
+import type { PanelNode, PanelNodeProps } from "./nodes/Panel";
+import type { ProgressNode, ProgressNodeProps } from "./nodes/Progress";
+import type { TextNode, TextNodeProps } from "./nodes/Text";
 
 type UIActionProp = {
   action: "show" | "hide";
@@ -18,21 +18,7 @@ export type Color = Tuple<
   [red: number, blue: number, green: number, alpha: number]
 >;
 
-export type ColorProp = number;
-
-export type NODE_TYPE_UNSET = -1;
-export type NODE_TYPE_PANEL = 2;
-export type NODE_TYPE_TEXT = 3;
-export type NODE_TYPE_IMAGE = 4;
-export type NODE_TYPE_PROGRESS = 5;
-export type NODE_TYPE_LAYOUT = 7;
-export type NODE_TYPE =
-  | NODE_TYPE_UNSET
-  | NODE_TYPE_PANEL
-  | NODE_TYPE_TEXT
-  | NODE_TYPE_IMAGE
-  | NODE_TYPE_PROGRESS
-  | NODE_TYPE_LAYOUT;
+export type ColorProp = number | string;
 
 type UIAction = {
   anim_duration: number;
@@ -64,3 +50,5 @@ declare global {
     }
   }
 }
+
+export type Node = ImageNode | LayoutNode | PanelNode | ProgressNode | TextNode;

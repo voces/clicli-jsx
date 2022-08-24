@@ -1,13 +1,15 @@
-import type { NODE_TYPE, SimpleAction, Tuple, UIEvent } from "../types";
+import type { Node, SimpleAction, Tuple, UIEvent } from "../types";
 import {
   UI_ACTION_HIDE,
   UI_ACTION_SHOW,
   UI_ANIM_UNIFORM,
+  UI_COMP_TYPE_UNSET,
   UI_EVENT_CLICK,
 } from "../constants";
 import { getParent } from "../parent";
+import { Children } from "basic-pragma";
 
-export type NodeProps = {
+export type BaseNodeProps = {
   name?: string;
   uid?: string;
   x?: number;
@@ -26,10 +28,11 @@ export type NodeProps = {
   visible?: boolean;
   // Simple events
   click?: SimpleAction;
+  children?: Children;
 };
 
-export type Node = {
-  type: NODE_TYPE;
+export type BaseNode = {
+  type: typeof UI_COMP_TYPE_UNSET;
   name: string | undefined;
   uid: string;
   event_list: UIEvent[];
@@ -74,12 +77,11 @@ const actionIndicies = Object.fromEntries(
 ) as Record<keyof typeof ACTION_TYPE, number>;
 
 const eventKeys = ["click"] as const;
-const createEventList = (props: NodeProps): UIEvent[] => {
+const createEventList = (props: BaseNodeProps): UIEvent[] => {
   const events: UIEvent[] = [];
 
   for (const eventName of eventKeys) {
     const event = props[eventName];
-    if (!event) continue;
 
     if (typeof event === "string") {
       events.push({
@@ -89,7 +91,7 @@ const createEventList = (props: NodeProps): UIEvent[] => {
         action_list: [],
         sound_id: null,
       });
-    } else {
+    } else if (event) {
       events.push({
         type: EVENT_TYPE[eventName],
         name: `${eventName}_${eventIndicies[eventName]++}`,
@@ -112,9 +114,9 @@ const createEventList = (props: NodeProps): UIEvent[] => {
 };
 
 export const createNode = (
-  props: NodeProps,
+  props: BaseNodeProps,
   type: keyof JSX.IntrinsicElements,
-): Node => {
+): BaseNode => {
   const parent = getParent();
   const width = props.width ?? props.size ?? parent.size.items[0];
   const height = props.height ?? props.size ?? parent.size.items[1];
@@ -154,10 +156,12 @@ export const createNode = (
   };
 
   return {
-    type: -1, // should be overwritten
+    type: UI_COMP_TYPE_UNSET, // should be overwritten
     name: props.name,
     uid: props.uid ??
-      `${parent.uid}.${props.name ?? type}${parent.children.length}`,
+      `${parent.uid}.${props.name ?? type}${
+        parent.children.filter((v) => v.name === props.name).length
+      }`,
     opacity: props.opacity,
     event_list: createEventList(props),
     can_drag: props.draggable,

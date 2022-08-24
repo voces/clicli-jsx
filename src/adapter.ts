@@ -1,6 +1,4 @@
-import { isLua, setAdapter } from "basic-pragma";
-
-import type { Node } from "./nodes/Node";
+import { Adapter, isLua } from "basic-pragma";
 
 import { createImageNode } from "./nodes/Image";
 import { createLayoutNode } from "./nodes/Layout";
@@ -8,31 +6,47 @@ import { createPanelNode } from "./nodes/Panel";
 import { createProgressNode } from "./nodes/Progress";
 import { createTextNode } from "./nodes/Text";
 import { getParent, setParent } from "./parent";
+import { Node } from "./types";
 
 const absurd = (v: never) => {
   throw new Error(`Unexpected ${v}`);
 };
 
-const createNodeFrame = (
-  type: keyof JSX.IntrinsicElements,
-  props: any,
+const createNodeFrame = <T extends keyof JSX.IntrinsicElements>(
+  type: T,
+  props: JSX.IntrinsicElements[T],
 ): Node => {
-  if (type === "text") return createTextNode(props);
-  if (type === "layout") return createLayoutNode(props);
-  if (type === "image") return createImageNode(props);
-  if (type === "progress") return createProgressNode(props);
-  if (type === "panel") return createPanelNode(props) as unknown as Node;
+  // deno-lint-ignore no-explicit-any
+  const unsafeProps: any = props;
+
+  if (type === "text") return createTextNode(unsafeProps);
+  if (type === "layout") return createLayoutNode(unsafeProps);
+  if (type === "image") return createImageNode(unsafeProps);
+  if (type === "progress") return createProgressNode(unsafeProps);
+  if (type === "panel") return createPanelNode(unsafeProps);
 
   absurd(type);
 };
 
-setAdapter<Node, unknown>({
-  createFrame: (type, tParent, props): Node => {
+export const adapter: Partial<
+  Adapter<Node, JSX.IntrinsicElements[keyof JSX.IntrinsicElements]>
+> = {
+  createFrame: <T extends keyof JSX.IntrinsicElements>(
+    type: T,
+    tParent: Node,
+    props: JSX.IntrinsicElements[T],
+  ) => {
+    if (isLua) {
+      // const ret = gameapi.get_ui_comp_n_list(1, props.uid);
+      throw "Lua hydration not yet implemented";
+    }
+
     const oldParent = getParent();
     setParent(tParent);
     const node = createNodeFrame(type, props);
     setParent(oldParent);
     tParent.children.push(node);
+
     return node;
   },
-});
+};

@@ -1,4 +1,6 @@
-import type { NODE_TYPE_PANEL } from "../types";
+import { Children } from "basic-pragma";
+import { UI_COMP_TYPE_PANEL } from "../constants";
+import { Node, Tuple } from "../types";
 
 export type PanelNodeProps = {
   name: string;
@@ -6,10 +8,11 @@ export type PanelNodeProps = {
   zorder?: number;
   visible?: boolean;
   opacity?: number;
+  children?: Children;
 };
 
-type PanelNode = {
-  type: NODE_TYPE_PANEL;
+export type PanelNode = {
+  type: typeof UI_COMP_TYPE_PANEL;
   name: string;
   uid: string;
   opacity: number;
@@ -17,11 +20,12 @@ type PanelNode = {
   zorder: number;
   editor_visible: boolean;
   children: Node[];
+  size: Tuple<[number, number]>;
 };
 
 export const createPanelNode = (props: PanelNodeProps): PanelNode => {
-  const node: PanelNode = {
-    type: 2,
+  const node: Omit<PanelNode, "size"> = {
+    type: UI_COMP_TYPE_PANEL,
     name: props.name,
     uid: props.uid ?? props.name,
     visible: props.visible ?? true,
@@ -32,5 +36,5 @@ export const createPanelNode = (props: PanelNodeProps): PanelNode => {
   };
   Object.defineProperty(node, "size", { value: { items: [1920, 1080] } });
 
-  return node;
+  return node as PanelNode;
 };

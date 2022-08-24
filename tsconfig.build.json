@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["clicli-types/types/index"]
+  },
+  "include": ["src"],
+  "exclude": ["**/*.test.ts"]
+}
