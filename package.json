@@ -23,5 +23,12 @@
   "peerDependencies": {
     "basic-pragma": "^4.2.0",
     "clicli-types": "^0.1.0"
+  },
+  "files": [
+    "dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github:voces/clicli-jsx"
   }
 }
