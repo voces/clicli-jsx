@@ -1,4 +1,5 @@
 import "./types";
 
 export * from "./adapter";
-export * from "./generateJSON";
+export * from "./types";
+export * from "./constants";

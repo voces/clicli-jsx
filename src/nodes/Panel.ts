@@ -1,5 +1,6 @@
 import { Children } from "basic-pragma";
 import { UI_COMP_TYPE_PANEL } from "../constants";
+import { getParent } from "../parent";
 import { Node, Tuple } from "../types";
 
 export type PanelNodeProps = {
@@ -34,7 +35,9 @@ export const createPanelNode = (props: PanelNodeProps): PanelNode => {
     opacity: props.opacity ?? 1,
     children: [],
   };
-  Object.defineProperty(node, "size", { value: { items: [1920, 1080] } });
+  Object.defineProperty(node, "size", {
+    value: { items: [...getParent().size.items] },
+  });
 
   return node as PanelNode;
 };

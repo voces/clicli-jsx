@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "types": ["clicli-types/types/index"]
+    "types": ["clicli-types/types/index", "node"]
   },
   "include": ["src"],
   "exclude": ["**/*.test.ts", "**/*.test.tsx"]

@@ -1,4 +1,4 @@
-import { Adapter, isLua } from "basic-pragma";
+import { Adapter, flushUpdates, isLua } from "basic-pragma";
 
 import { createImageNode } from "./nodes/Image";
 import { createLayoutNode } from "./nodes/Layout";
@@ -28,6 +28,8 @@ const createNodeFrame = <T extends keyof JSX.IntrinsicElements>(
   absurd(type);
 };
 
+let updateScheduled = false;
+
 export const adapter: Partial<
   Adapter<Node, JSX.IntrinsicElements[keyof JSX.IntrinsicElements]>
 > = {
@@ -48,5 +50,24 @@ export const adapter: Partial<
     tParent.children.push(node);
 
     return node;
+  },
+  scheduleUpdate: () => {
+    if (updateScheduled) return;
+    updateScheduled = true;
+
+    if (isLua) {
+      // gameapi.add_timer(Fix32(0), false, () => {
+      //   updateScheduled = false;
+      //   flushUpdates();
+      // });
+      throw "Lua hydration not yet implemented";
+    } else {
+      // TODO: find a way to make buildLua happy with this...
+      // @ts-ignore Undefined in Lua
+      setImmediate(() => {
+        updateScheduled = false;
+        flushUpdates();
+      });
+    }
   },
 };
