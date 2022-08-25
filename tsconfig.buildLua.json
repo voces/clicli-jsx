@@ -1,5 +1,9 @@
 {
   "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "types": ["clicli-types/types/index"]
+  },
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "src/static"],
   "tstl": {
     "buildMode": "library",
     "noImplicitSelf": true

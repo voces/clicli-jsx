@@ -4,7 +4,7 @@ import {
   UI_COMP_TYPE_PANEL,
   UI_COMP_TYPE_TEXT,
 } from "./constants";
-import { generateJSON } from "./generateJSON";
+import { render } from "./static/render";
 
 const INVENTORY_BACKGROUND = 134280992;
 const CLOSE_ICON = 134272484;
@@ -55,7 +55,7 @@ it("js generation", () => {
     </panel>
   );
 
-  const mainTsx = generateJSON(<App />);
+  const mainTsx = render(<App />);
   expect(mainTsx.name).toEqual("mainTsx");
   expect(mainTsx.uid).toEqual("mainTsx");
   expect(mainTsx.type).toEqual(UI_COMP_TYPE_PANEL);
