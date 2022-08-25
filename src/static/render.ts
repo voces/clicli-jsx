@@ -64,6 +64,7 @@ export const render = <
 };
 
 // Sort props alphabetically
+// deno-lint-ignore no-explicit-any
 const sortObj = (obj: any): any => {
   if (Array.isArray(obj)) {
     return obj.map((v) => typeof v === "object" && v !== null ? sortObj(v) : v);
@@ -80,7 +81,7 @@ const sortObj = (obj: any): any => {
   );
 };
 
-export const write = async (
+export const write = (
   panels: PanelNode | PanelNode[],
   directory: string,
 ) =>
